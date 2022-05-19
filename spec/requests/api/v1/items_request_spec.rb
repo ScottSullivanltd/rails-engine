@@ -46,7 +46,8 @@ RSpec.describe "Items API" do
     item_params = {
       name: "Laptop",
       description: "Has a screen and a keyboard.",
-      unit_price: 99.50
+      unit_price: 99.99,
+      merchant_id: 14
     }
     headers = {"CONTENT_TYPE" => "application/json"}
 
@@ -61,6 +62,7 @@ RSpec.describe "Items API" do
     expect(item[:attributes][:name]).to eq(item_params[:name])
     expect(item[:attributes][:description]).to eq(item_params[:description])
     expect(item[:attributes][:unit_price]).to eq(item_params[:unit_price])
+    expect(item[:attributes][:merchant_id]).to eq(item_params[:merchant_id])
     # expect(created_item.name).to eq(item_params[:name])
     # expect(created_item.description).to eq(item_params[:description])
     # expect(created_item.unit_price).to eq(item_params[:unit_price])
@@ -90,5 +92,37 @@ RSpec.describe "Items API" do
     expect(response).to have_http_status(:no_content)
     # expect(response).to include("Item is removed.")
     expect { Item.find(item.id) }.to raise_error(ActiveRecord::RecordNotFound)
+  end
+
+  it "returns all items associated with a given merchant" do
+    merchant = create(:merchant)
+    item1 = create(:item, merchant_id: merchant.id)
+    item2 = create(:item, merchant_id: merchant.id)
+    item3 = create(:item, merchant_id: merchant.id)
+
+    get "/api/v1/merchants/#{merchant.id}/items"
+
+    response_body = JSON.parse(response.body, symbolize_names: true)
+    items = response_body[:data]
+
+    expect(response).to be_successful
+    expect(response).to have_http_status(:ok)
+    expect(merchant.items.count).to eq(3)
+
+    items.each do |item|
+      expect(item).to have_key(:id)
+      expect(item[:id].to_i).to be_an(Integer)
+
+      expect(item[:type]).to eq("item")
+
+      expect(item[:attributes]).to have_key(:name)
+      expect(item[:attributes][:name]).to be_a(String)
+
+      expect(item[:attributes]).to have_key(:description)
+      expect(item[:attributes][:description]).to be_a(String)
+
+      expect(item[:attributes]).to have_key(:unit_price)
+      expect(item[:attributes][:unit_price]).to be_a(Float)
+    end
   end
 end

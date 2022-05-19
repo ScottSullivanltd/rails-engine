@@ -26,12 +26,11 @@ class Api::V1::ItemsController < ApplicationController
     # item.destroy
     # render json: {message: "Item is removed."}, status: :no_content
     render json: Item.destroy(params[:id]), status: :no_content
-    # render json: ItemSerializer.new(Item.delete(id: params[:id])), status: :ok
   end
 
   private
 
   def item_params
-    params.require(:item).permit(:name, :description, :unit_price)
+    params.require(:item).permit(:name, :description, :unit_price, :merchant_id)
   end
 end
