@@ -94,35 +94,17 @@ RSpec.describe "Items API" do
     expect { Item.find(item.id) }.to raise_error(ActiveRecord::RecordNotFound)
   end
 
-  it "returns all items associated with a given merchant" do
+  it "returns the merchant info for a given item" do
     merchant = create(:merchant)
-    item1 = create(:item, merchant_id: merchant.id)
-    item2 = create(:item, merchant_id: merchant.id)
-    item3 = create(:item, merchant_id: merchant.id)
+    item = create(:item, merchant_id: merchant.id)
 
-    get "/api/v1/merchants/#{merchant.id}/items"
+    get "/api/v1/items/#{item.id}/merchant"
 
     response_body = JSON.parse(response.body, symbolize_names: true)
-    items = response_body[:data]
+    merchant = response_body[:data]
 
     expect(response).to be_successful
     expect(response).to have_http_status(:ok)
-    expect(merchant.items.count).to eq(3)
-
-    items.each do |item|
-      expect(item).to have_key(:id)
-      expect(item[:id].to_i).to be_an(Integer)
-
-      expect(item[:type]).to eq("item")
-
-      expect(item[:attributes]).to have_key(:name)
-      expect(item[:attributes][:name]).to be_a(String)
-
-      expect(item[:attributes]).to have_key(:description)
-      expect(item[:attributes][:description]).to be_a(String)
-
-      expect(item[:attributes]).to have_key(:unit_price)
-      expect(item[:attributes][:unit_price]).to be_a(Float)
-    end
+    expect(merchant[:attributes]).to include(:name)
   end
 end
