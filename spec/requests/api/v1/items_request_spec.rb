@@ -43,6 +43,8 @@ RSpec.describe "Items API" do
   end
 
   it "can create a new item" do
+    merchant = create(:merchant, id: 14)
+
     item_params = {
       name: "Laptop",
       description: "Has a screen and a keyboard.",
@@ -53,8 +55,6 @@ RSpec.describe "Items API" do
 
     post "/api/v1/items", headers: headers, params: JSON.generate(item: item_params)
 
-    # created_item = Item.last
-
     response_body = JSON.parse(response.body, symbolize_names: true)
     item = response_body[:data]
 
@@ -63,9 +63,6 @@ RSpec.describe "Items API" do
     expect(item[:attributes][:description]).to eq(item_params[:description])
     expect(item[:attributes][:unit_price]).to eq(item_params[:unit_price])
     expect(item[:attributes][:merchant_id]).to eq(item_params[:merchant_id])
-    # expect(created_item.name).to eq(item_params[:name])
-    # expect(created_item.description).to eq(item_params[:description])
-    # expect(created_item.unit_price).to eq(item_params[:unit_price])
   end
 
   it "can update an existing item" do
@@ -90,7 +87,6 @@ RSpec.describe "Items API" do
     expect { delete "/api/v1/items/#{item.id}" }.to change(Item, :count).by(-1)
 
     expect(response).to have_http_status(:no_content)
-    # expect(response).to include("Item is removed.")
     expect { Item.find(item.id) }.to raise_error(ActiveRecord::RecordNotFound)
   end
 
