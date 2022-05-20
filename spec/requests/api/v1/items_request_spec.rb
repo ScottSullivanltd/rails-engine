@@ -43,6 +43,8 @@ RSpec.describe "Items API" do
   end
 
   it "can create a new item" do
+    merchant = create(:merchant, id: 14)
+
     item_params = {
       name: "Laptop",
       description: "Has a screen and a keyboard.",

@@ -6,12 +6,10 @@ Rails.application.routes.draw do
       get "/merchants/find", to: "merchant_search#index"
       resources :merchants, only: [:index, :show] do
         resources :items, controller: "merchant_items", action: :index
-        # resources :find, only: [:index], controller: :search
       end
 
       resources :items do
         resources :merchant, controller: "merchant_items", action: :show
-        # resources :find_all, only: [:index], controller: :search
       end
     end
   end
