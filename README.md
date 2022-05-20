@@ -1,24 +1,24 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Project Description
+You are working for a company developing an E-Commerce Application. Your team is working in a service-oriented architecture, meaning the front and back ends of this application are separate and communicate via APIs. Your job is to expose the data that powers the site through an API that the front end will consume.
 
-Things you may want to cover:
+## SECTION ONE: RESTful Endpoints:
+Expose the RESTful API endpoints for the following:
 
-* Ruby version
+### Merchants:
+get all merchants
+get one merchant
+get all items for a given merchant ID
 
-* System dependencies
+### Items:
+get all items
+get one item
+create an item
+edit an item
+delete an item
+get the merchant data for a given item ID
 
-* Configuration
+## SECTION TWO: Non-RESTful Search Endpoints
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Find one MERCHANT based on search criteria AND find all ITEMS based on search criteria
