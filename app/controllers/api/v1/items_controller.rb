@@ -26,9 +26,6 @@ class Api::V1::ItemsController < ApplicationController
   end
 
   def destroy
-    # item = Item.find_by(id: params[:id])
-    # item.destroy
-    # render json: {message: "Item is removed."}, status: :no_content
     render json: Item.destroy(params[:id]), status: :no_content
   end
 

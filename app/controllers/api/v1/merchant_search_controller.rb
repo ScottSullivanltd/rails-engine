@@ -3,7 +3,7 @@ class Api::V1::MerchantSearchController < ApplicationController
     find_info = params[:name]
     merchant = Merchant.search_for_one_merch(find_info)
     if merchant.nil?
-      render json: {data: {message: "No Merchant with '#{find_info}' can be found"}}
+      render json: {data: {message: "No Merchant with '#{find_info}' can be found"}}, status: 404
     else
       render json: MerchantSerializer.new(merchant)
     end

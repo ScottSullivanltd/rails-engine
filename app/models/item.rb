@@ -6,8 +6,8 @@ class Item < ApplicationRecord
   # before_destroy :destroy_invoices
 
   belongs_to :merchant
-  has_many :invoice_items
-  has_many :invoices, through: :invoice_items
+  # has_many :invoice_items
+  # has_many :invoices, through: :invoice_items
 
   # def destroy_invoices
   #   invoices.each do |invoice|
@@ -20,14 +20,14 @@ class Item < ApplicationRecord
   end
 
   def self.items_above_min_price(price)
-    Item.where("unit_price >= ?", price).order(unit_price: :asc).first
+    Item.where("unit_price >= ?", price).order(unit_price: :asc)
   end
 
   def self.items_below_max_price(price)
-    Item.where("unit_price <= ?", price).order(unit_price: :desc).first
+    Item.where("unit_price <= ?", price).order(unit_price: :desc)
   end
 
   def self.items_between_min_max(min_price, max_price)
-    Item.where(unit_price(BETWEEN(min_price(AND(max_price)))))
+    Item.where("unit_price > ?", min_price) & Item.where("unit_price < ?", max_price)
   end
 end
