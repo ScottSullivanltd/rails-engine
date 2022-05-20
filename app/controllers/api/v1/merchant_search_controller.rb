@@ -1,5 +1,5 @@
-class Api::V1::Merchant::SearchController < ApplicationController
-  def show
+class Api::V1::MerchantSearchController < ApplicationController
+  def index
     find_info = params[:name]
     merchant = Merchant.search_for_one_merch(find_info)
     if merchant.nil?

@@ -8,7 +8,8 @@ RSpec.describe "Merchant Search" do
 
     get "/api/v1/merchants/find?name=ring"
 
-    merchant = JSON.parse(response.body, symbolize_names: true)[:data]
+    response_body = JSON.parse(response.body, symbolize_names: true)
+    merchant = response_body[:data]
 
     expect(response).to be_successful
     expect(merchant).to have_key(:id)
@@ -18,6 +19,6 @@ RSpec.describe "Merchant Search" do
 
     expect(merchant[:attributes]).to have_key(:name)
     expect(merchant[:attributes][:name]).to be_a(String)
-    expect(merchant[:attributes][:name]).to eq("Ring World")
+    expect(merchant[:attributes][:name]).to eq("Turing")
   end
 end

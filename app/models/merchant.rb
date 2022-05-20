@@ -4,6 +4,6 @@ class Merchant < ApplicationRecord
   has_many :items
 
   def self.search_for_one_merch(find_info)
-    Item.where("name ILIKE ?", "%#{find_info}").first
+    Merchant.where("name ILIKE ?", "%#{find_info}%").first
   end
 end
