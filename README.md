@@ -7,17 +7,17 @@ You are working for a company developing an E-Commerce Application. Your team is
 Expose the RESTful API endpoints for the following:
 
 ### Merchants:
-get all merchants\n
-get one merchant\n
-get all items for a given merchant ID\n
+get all merchants<br>
+get one merchant<br>
+get all items for a given merchant ID<br>
 
 ### Items:
-get all items\n
-get one item\n
-create an item\n
-edit an item\n
-delete an item\n
-get the merchant data for a given item ID\n
+get all items<br>
+get one item<br>
+create an item<br>
+edit an item<br>
+delete an item<br>
+get the merchant data for a given item ID<br>
 
 ### SECTION TWO: Non-RESTful Search Endpoints
 
