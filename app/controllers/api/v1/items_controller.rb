@@ -12,14 +12,13 @@ class Api::V1::ItemsController < ApplicationController
   end
 
   def update
-    render json: ItemSerializer.new(Item.update(params[:id], item_params)), status: :ok
+    if params[:merchant_id]
+      merchant = Merchant.find(params[:merchant_id]) # this is needed to raise excpetion if there is no merchant
+      render json: ItemSerializer.new(Item.update(params[:id], item_params)), status: :ok
+    else
+      render json: ItemSerializer.new(Item.update(params[:id], item_params)), status: :ok
+    end
   end
-
-  # def update
-  #   item = Item.find_by(id: params[:id])
-  #   item.update(item_params)
-  #   render json: ItemSerializer.new(item)
-  # end
 
   def destroy
     # item = Item.find_by(id: params[:id])
