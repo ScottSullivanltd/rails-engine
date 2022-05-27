@@ -1,13 +1,15 @@
 class Item < ApplicationRecord
-  validates_presence_of :name
-  validates_presence_of :description
-  validates :unit_price, numericality: true
+  validates :name, presence: true
+  validates :description, presence: true
+  validates :unit_price, presence: true, numericality: true
 
   # before_destroy :destroy_invoices
 
   belongs_to :merchant
-  # has_many :invoice_items
-  # has_many :invoices, through: :invoice_items
+  has_many :invoice_items
+  has_many :invoices, through: :invoice_items
+  has_many :transactions, through: :invoices
+  has_many :customers, through: :invoices
 
   # def destroy_invoices
   #   invoices.each do |invoice|
